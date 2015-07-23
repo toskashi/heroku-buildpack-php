@@ -235,6 +235,9 @@ if [[ "${PHP_VERSION}" ]]; then
         # the newrelic extension logs to stderr which pollutes our build output on each invocation of PHP, the daemon it launches will prevent the build from finishing, and each call to PHP would be logged to NR as non-web traffic, so we disable it for the duration of this build
         `which php` -dnewrelic.enabled=0 -dnewrelic.loglevel=error -dnewrelic.daemon.dont_launch=3 -dnewrelic.daemon.loglevel=error "$@"
     }
+
+    # Install msgpack extension
+    pecl install msgpack-beta
     
     exts=()
     if [[ -f "composer.lock" ]]; then
